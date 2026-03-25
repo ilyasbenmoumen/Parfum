@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Essence Noire — L'Art de la Parfumerie</title>
+  <link rel="icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="dark">
+
+  <!-- ===== HEADER ===== -->
+  <header id="header">
+    <div class="container header-inner">
+      <a href="#accueil" class="logo" onclick="scrollTo('accueil')">
+        <span class="logo-gold">ESSENCE</span>
+        <span class="logo-light">NOIRE</span>
+      </a>
+
+      <nav id="desktop-nav">
+        <button class="nav-link active" data-section="accueil" onclick="scrollTo('accueil')">Accueil</button>
+        <button class="nav-link" data-section="collections" onclick="scrollTo('collections')">Collections</button>
+        <button class="nav-link" data-section="services" onclick="scrollTo('services')">Services</button>
+        <button class="nav-link" data-section="newsletter" onclick="scrollTo('newsletter')">Newsletter</button>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="theme-toggle" aria-label="Changer le thème" onclick="toggleTheme()">
+          <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="icon-btn" id="search-btn" aria-label="Rechercher" onclick="toggleSearch()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="icon-btn cart-btn" aria-label="Panier" onclick="toggleCart()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="cart-badge" id="cart-badge" style="display:none">0</span>
+        </button>
+        <button class="icon-btn mobile-menu-btn" aria-label="Menu" onclick="toggleMobileMenu()">
+          <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="mobile-menu hidden">
+      <nav>
+        <button class="mobile-nav-link" onclick="scrollTo('accueil')">Accueil</button>
+        <button class="mobile-nav-link" onclick="scrollTo('collections')">Collections</button>
+        <button class="mobile-nav-link" onclick="scrollTo('services')">Services</button>
+        <button class="mobile-nav-link" onclick="scrollTo('newsletter')">Newsletter</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== SEARCH OVERLAY ===== -->
+  <div id="search-overlay" class="search-overlay hidden" onclick="closeSearch()"></div>
+  <div id="search-panel" class="search-panel hidden">
+    <div class="search-panel-inner">
+      <div class="search-input-wrap">
+        <svg class="search-input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input
+          type="text"
+          id="search-input"
+          class="search-input"
+          placeholder="Rechercher un parfum, une marque, une note…"
+          oninput="handleSearch()"
+          autocomplete="off"
+        />
+        <button class="search-clear hidden" id="search-clear" onclick="clearSearch()" aria-label="Effacer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <button class="search-close-btn" onclick="closeSearch()" aria-label="Fermer">Esc</button>
+      </div>
+
+      <!-- Results -->
+      <div id="search-results" class="search-results hidden"></div>
+
+      <!-- Default state -->
+      <div id="search-default" class="search-default">
+        <p class="search-hint">Tapez pour rechercher parmi nos <strong>6 parfums</strong></p>
+        <div class="search-tags">
+          <button class="search-tag" onclick="setSearchQuery('Dior')">Dior</button>
+          <button class="search-tag" onclick="setSearchQuery('Orientale')">Orientale</button>
+          <button class="search-tag" onclick="setSearchQuery('Florale')">Florale</button>
+          <button class="search-tag" onclick="setSearchQuery('Boisée')">Boisée</button>
+          <button class="search-tag" onclick="setSearchQuery('Baccarat')">Baccarat</button>
+          <button class="search-tag" onclick="setSearchQuery('Chanel')">Chanel</button>
+        </div>
+      </div>
+
+      <!-- No results -->
+      <div id="search-empty" class="search-empty hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <p>Aucun parfum trouvé pour <strong id="search-empty-query"></strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section id="accueil" class="hero">
+    <div class="hero-bg">
+      <img src="assets/hero-perfume.jpg" alt="Parfum de luxe" class="hero-img" id="hero-img" />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-overlay-sides"></div>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+    <div class="hero-glow"></div>
+
+    <div class="container hero-content">
+      <p class="hero-sub reveal-item">Collection Exclusive</p>
+      <h1 class="hero-title reveal-item">
+        L'Art de la <em>Parfumerie</em>
+      </h1>
+      <div class="hero-divider reveal-item"></div>
+      <p class="hero-desc reveal-item">
+        Des fragrances d'exception, sélectionnées par les plus grands maîtres parfumeurs.
+      </p>
+      <a href="#collections" class="hero-btn reveal-item" onclick="event.preventDefault(); scrollTo('collections')">
+        Explorer la Collection
+      </a>
+    </div>
+
+    <div class="scroll-indicator">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ===== COLLECTIONS ===== -->
+  <section id="collections" class="section">
+    <div class="section-glow"></div>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal-item">Sélection Exclusive</p>
+        <h2 class="section-title reveal-item">Nos Parfums Vedettes</h2>
+        <div class="ornament reveal-item">
+          <span class="ornament-diamond"></span>
+          <div class="ornament-line"></div>
+          <span class="ornament-diamond"></span>
+        </div>
+        <p class="section-desc reveal-item">Fragrances sélectionnées pour leur qualité et leur singularité.</p>
+      </div>
+
+      <div class="products-grid" id="products-grid"></div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services" class="section section-alt">
+    <div class="service-glow service-glow-1"></div>
+    <div class="service-glow service-glow-2"></div>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal-item">Nos Services</p>
+        <h2 class="section-title reveal-item">Une Expérience d'Exception</h2>
+        <div class="ornament reveal-item">
+          <span class="ornament-diamond"></span>
+          <div class="ornament-line"></div>
+          <span class="ornament-diamond"></span>
+        </div>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal-item">
+          <div class="service-icon">✨</div>
+          <h3>Échantillons Offerts</h3>
+          <p>Des échantillons avec chaque commande.</p>
+        </div>
+        <div class="service-card reveal-item">
+          <div class="service-icon">📦</div>
+          <h3>Emballage Luxueux</h3>
+          <p>Un écrin digne des plus grandes maisons.</p>
+        </div>
+        <div class="service-card reveal-item">
+          <div class="service-icon">🚚</div>
+          <h3>Livraison Express</h3>
+          <p>24h sur Paris, 48h en France.</p>
+        </div>
+        <div class="service-card reveal-item">
+          <div class="service-icon">💬</div>
+          <h3>Conseil Expert</h3>
+          <p>Nos parfumeurs vous accompagnent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NEWSLETTER ===== -->
+  <section id="newsletter" class="section newsletter-section">
+    <div class="newsletter-glow"></div>
+    <div class="separator-glow"></div>
+    <div class="container">
+      <div class="newsletter-inner">
+        <p class="section-label reveal-item">Newsletter</p>
+        <h2 class="section-title reveal-item">Restez Informé</h2>
+        <div class="ornament reveal-item">
+          <span class="ornament-diamond"></span>
+          <div class="ornament-line"></div>
+          <span class="ornament-diamond"></span>
+        </div>
+        <p class="section-desc reveal-item">Recevez nos nouvelles collections et offres exclusives.</p>
+
+        <div class="newsletter-form-wrap reveal-item" id="newsletter-wrap">
+          <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+            <div class="email-field">
+              <svg class="email-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+              <input type="email" placeholder="Votre email" required id="email-input" />
+            </div>
+            <button type="submit" class="btn-primary">
+              S'inscrire
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </form>
+          <div id="newsletter-success" class="newsletter-success hidden">
+            <div class="success-icon">✓</div>
+            <span>Merci pour votre inscription !</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="separator-glow"></div>
+    <div class="container footer-grid">
+      <div class="footer-brand reveal-item">
+        <h3 class="footer-logo">
+          <span class="logo-gold">ESSENCE</span>
+          <span class="logo-light"> NOIRE</span>
+        </h3>
+        <p>L'art de la parfumerie d'exception depuis Casablanca. Chaque fragrance raconte une histoire unique.</p>
+      </div>
+
+      <div class="footer-col reveal-item">
+        <h4 class="footer-heading">Contact</h4>
+        <p class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Bd Anfa, Casablanca 20250, Maroc
+        </p>
+        <p class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +212 5 22 36 10 00
+        </p>
+        <p class="footer-contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          contact@essencenoire.ma
+        </p>
+      </div>
+
+      <div class="footer-col reveal-item">
+        <h4 class="footer-heading">Informations</h4>
+        <ul class="footer-links">
+          <li><a href="#">Mentions Légales</a></li>
+          <li><a href="#">Confidentialité</a></li>
+          <li><a href="#">CGV</a></li>
+          <li><a href="admin.html" style="color:var(--gold)">⚙ Admin</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Essence Noire. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <!-- ===== CART DRAWER ===== -->
+  <div id="cart-overlay" class="cart-overlay hidden" onclick="closeCart()"></div>
+  <div id="cart-drawer" class="cart-drawer">
+    <div class="cart-header">
+      <h3>Votre Panier</h3>
+      <button class="icon-btn" onclick="closeCart()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cart-total-price">0.00 MAD</span>
+      </div>
+      <button class="btn-primary btn-full" onclick="openCheckout()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        Commander
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== PRODUCT MODAL ===== -->
+  <div id="modal-overlay" class="modal-overlay hidden" onclick="closeModal()"></div>
+  <div id="product-modal" class="product-modal hidden">
+    <button class="modal-close" onclick="closeModal()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div id="modal-content" class="modal-content"></div>
+  </div>
+
+  <!-- ===== CHECKOUT MODAL ===== -->
+  <div id="checkout-overlay" class="modal-overlay hidden" onclick="closeCheckout()"></div>
+  <div id="checkout-modal" class="checkout-modal hidden">
+    <button class="modal-close" onclick="closeCheckout()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <!-- Step indicator -->
+    <div class="checkout-steps">
+      <div class="checkout-step active" id="step-dot-1">
+        <div class="step-dot">1</div>
+        <span>Vos infos</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="checkout-step" id="step-dot-2">
+        <div class="step-dot">2</div>
+        <span>Récapitulatif</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="checkout-step" id="step-dot-3">
+        <div class="step-dot">✓</div>
+        <span>Confirmation</span>
+      </div>
+    </div>
+
+    <!-- STEP 1 : Form -->
+    <div id="checkout-step-1" class="checkout-body">
+      <h2 class="checkout-title">Informations de livraison</h2>
+      <form id="checkout-form" onsubmit="goToStep2(event)" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom *</label>
+            <input type="text" id="c-firstname" placeholder="Mohammed" required />
+            <span class="field-error" id="err-firstname"></span>
+          </div>
+          <div class="form-group">
+            <label>Nom *</label>
+            <input type="text" id="c-lastname" placeholder="El Amrani" required />
+            <span class="field-error" id="err-lastname"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="c-email" placeholder="vous@exemple.ma" required />
+          <span class="field-error" id="err-email"></span>
+        </div>
+        <div class="form-group">
+          <label>Téléphone *</label>
+          <input type="tel" id="c-phone" placeholder="+212 6 00 00 00 00" required />
+          <span class="field-error" id="err-phone"></span>
+        </div>
+        <div class="form-group">
+          <label>Adresse *</label>
+          <input type="text" id="c-address" placeholder="Bd Anfa, Apt 5" required />
+          <span class="field-error" id="err-address"></span>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ville *</label>
+            <input type="text" id="c-city" placeholder="Casablanca" required />
+            <span class="field-error" id="err-city"></span>
+          </div>
+          <div class="form-group">
+            <label>Code Postal</label>
+            <input type="text" id="c-zip" placeholder="20250" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Note (optionnel)</label>
+          <textarea id="c-note" placeholder="Instructions de livraison..."></textarea>
+        </div>
+        <div class="checkout-footer">
+          <button type="button" class="btn-ghost" onclick="closeCheckout()">Annuler</button>
+          <button type="submit" class="btn-primary">
+            Continuer
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- STEP 2 : Summary -->
+    <div id="checkout-step-2" class="checkout-body hidden">
+      <h2 class="checkout-title">Récapitulatif de la commande</h2>
+      <div class="summary-grid">
+        <div>
+          <h4 class="summary-section-title">Livraison à</h4>
+          <div id="summary-address" class="summary-address-box"></div>
+        </div>
+        <div>
+          <h4 class="summary-section-title">Articles</h4>
+          <div id="summary-items" class="summary-items"></div>
+          <div class="summary-total-row">
+            <span>Total</span>
+            <span id="summary-total" class="summary-total-amount"></span>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-footer">
+        <button type="button" class="btn-ghost" onclick="goToStep1()">← Retour</button>
+        <button type="button" class="btn-primary" onclick="confirmOrder()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Confirmer la commande
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3 : Confirmation -->
+    <div id="checkout-step-3" class="checkout-body hidden">
+      <div class="confirmation-wrap">
+        <div class="confirmation-icon">✓</div>
+        <h2 class="checkout-title">Commande confirmée !</h2>
+        <p class="confirmation-ref">Référence : <strong id="order-ref"></strong></p>
+        <p class="confirmation-msg">Merci pour votre commande. Nous vous contacterons bientôt pour organiser la livraison.</p>
+        <button class="btn-primary" onclick="closeCheckout()">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
