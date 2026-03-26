@@ -11,6 +11,7 @@
   --cream: #f5f0e8;
   --rose: #d4836a;
   --bg: #0a0a0a;
+  --bg-hsl: 0 0% 4%;        /* correspond à #0a0a0a */
   --bg-card: #111111;
   --bg-muted: #1a1a1a;
   --text: #f0ece0;
@@ -25,6 +26,7 @@
 
 body.light {
   --bg: #faf8f4;
+  --bg-hsl: 40 33% 97%;      /* correspond à #faf8f4 */
   --bg-card: #f5f2ec;
   --bg-muted: #eee8dc;
   --text: #2a2016;
@@ -217,12 +219,22 @@ body.light .mobile-menu { background: rgba(250,248,244,0.95); }
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.4) 50%, rgba(10,10,10,0.9) 100%);
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--bg-hsl) / 0.55) 0%,
+    hsl(var(--bg-hsl) / 0.4)  50%,
+    hsl(var(--bg-hsl) / 1)   100%
+  );
 }
 .hero-overlay-sides {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(10,10,10,0.3), transparent, rgba(10,10,10,0.3));
+  background: linear-gradient(
+    to right,
+    hsl(var(--bg-hsl) / 0.3),
+    transparent,
+    hsl(var(--bg-hsl) / 0.3)
+  );
 }
 .hero-glow {
   position: absolute;
